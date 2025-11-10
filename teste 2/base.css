@@ -9,16 +9,12 @@ body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;display:flex;backgrou
 .main{flex:1;padding:28px}
 .page-header{border-bottom:1px solid #e6eef6;margin-bottom:18px}
 .page-header h1{margin:0}
+
+/* controle de seções */
 section{display:none}
 .active-section{display:block}
 .section-pad{display:none}
 .section-pad.active-section{display:block}
-
-/* cards do  */
-.cards{display:flex;gap:14px;flex-wrap:wrap}
-.card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 3px 12px rgba(16,42,67,.06);min-width:200px;flex:1;text-align:center}
-.card h3{font-size:14px;margin:0 0 6px;color:#5b6b7f}
-.card span{font-size:22px;font-weight:700}
 
 /* barra título + busca + botão */
 .section-title-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:8px 0 14px}
@@ -53,103 +49,10 @@ section{display:none}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
 .modal-card input,.modal-card select{width:100%;padding:10px;border:1px solid #d7e1ec;border-radius:10px}
 .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:12px}
-.btn-expirado {
-  background: #fddcdc;
-  color: #b91c1c;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
-  font-weight: 600;
-}
+
 /* ====== LAYOUT DE FORMULÁRIOS EM MODAIS ====== */
-.modal-card .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px 20px; /* espaçamento entre linhas e colunas */
-  margin-top: 10px;
-}
-
-.modal-card label {
-  display: flex;
-  flex-direction: column;
-  font-weight: 600;
-  color: #333;
-  font-size: 0.9rem;
-}
-
-.modal-card input,
-.modal-card select {
-  margin-top: 5px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.modal-card input[type="file"] {
-  padding: 5px;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.btn-expirado:hover {
-  background: #fbbbbb;
-}
-.devolucao-data {
-  font-weight: 600;
-}
-.devolucao-wrap {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.cards-grid {
-  display: flex;
-  gap: 20px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-/* style botões resumo */
-
-.dash-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px 30px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  flex: 1 1 250px;
-  min-width: 220px;
-  text-align: center;
-}
-
-.dash-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-#areaDetalhes {
-  margin-top: 30px;
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-/* relatorios*/
-
+.modal-card .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px 20px;margin-top:10px}
+.modal-card label{display:flex;flex-direction:column;font-weight:600;color:#333;font-size:.9rem}
+.modal-card input,.modal-card select{margin-top:5px;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:.9rem;width:100%;box-sizing:border-box}
+.modal-card input[type="file"]{padding:5px}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}

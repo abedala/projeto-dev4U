@@ -1,0 +1,19 @@
+.cards-grid{display:flex;gap:20px;justify-content:flex-start;flex-wrap:wrap;margin-top:20px}
+
+/* botões/“cards” do resumo */
+.dash-card{
+  background:#fff;border-radius:12px;padding:20px 30px;
+  box-shadow:0 2px 5px rgba(0,0,0,.1);cursor:pointer;
+  transition:transform .2s, box-shadow .2s;flex:1 1 250px;min-width:220px;text-align:center
+}
+.dash-card:hover{transform:scale(1.03);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+
+#areaDetalhes{
+  margin-top:30px;background:#fff;border-radius:12px;padding:20px;
+  box-shadow:0 2px 5px rgba(0,0,0,.1);animation:fadeIn .3s ease
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+/* container mostrado/oculto dos relatórios do mês */
+.tabela-oculta{display:none}
+.tabela-visivel{display:block}

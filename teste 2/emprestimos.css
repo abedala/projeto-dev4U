@@ -1,0 +1,21 @@
+/* Elementos visuais exclusivos da aba Empréstimos */
+.btn-expirado{
+  background:#fddcdc;color:#b91c1c;border:none;padding:6px 10px;border-radius:8px;font-size:13px;cursor:pointer;font-weight:600
+}
+.btn-expirado:hover{background:#fbbbbb}
+.devolucao-data{font-weight:600}
+.devolucao-wrap{display:inline-flex;align-items:center;gap:8px}
+.btn-desfazer {
+  background: #ffe7c2;
+  color: #b45309;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-desfazer:hover {
+  background: #ffd597;
+}

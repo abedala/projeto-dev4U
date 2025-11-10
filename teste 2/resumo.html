@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel do Bibliotecário</title>
+
+  <!-- CSS base (layout + componentes compartilhados) -->
+  <link rel="stylesheet" href="base.css" />
+
+  <!-- CSS por aba -->
+  <link rel="stylesheet" href="resumo.css" />
+  <link rel="stylesheet" href="livros.css" />
+  <link rel="stylesheet" href="usuarios.css" />
+  <link rel="stylesheet" href="emprestimos.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>Biblioteca</h2>
+    <ul>
+      <li class="active" data-section="resumo">📊 Resumo</li>
+      <li data-section="livros">📚 Gerenciar Livros</li>
+      <li data-section="usuarios">👥 Gerenciar Usuários</li>
+      <li data-section="emprestimos">📦 Empréstimos e Devoluções</li>
+      <li id="logout">🚪 Logout</li>
+    </ul>
+  </aside>
+
+  <main class="main">
+    <header class="page-header">
+      <h1>Painel do Bibliotecário</h1>
+      <p>Biblioteca Escolar</p>
+    </header>
+
+    <!-- Resumo -->
+    <section id="resumo" class="section-pad active-section">
+      <h2>Visão Geral</h2>
+
+      <div class="cards-grid">
+        <div class="dash-card" id="cardLivros">
+          <h3>📚 Livros cadastrados</h3>
+          <p id="livrosCount">0</p>
+        </div>
+
+        <div class="dash-card" id="cardUsuarios">
+          <h3>👤 Usuários</h3>
+          <p id="usuariosCount">0</p>
+        </div>
+
+        <div class="dash-card" id="cardEmprestimos">
+          <h3>📘 Empréstimos ativos</h3>
+          <p id="emprestimosCount">0</p>
+        </div>
+      </div>
+
+      <!-- área dinâmica (tabelas) -->
+      <div id="areaDetalhes"></div>
+
+      <!-- Relatórios (botão/tabela opcionais, se você já usava) -->
+      <div style="margin-top:16px">
+        <button class="btn secondary" id="btnEmprestimosMes">Empréstimos deste mês</button>
+      </div>
+      <div id="tabelaEmprestimosContainer" class="tabela-oculta" style="margin-top:12px">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Usuário</th>
+              <th>Matrícula</th>
+              <th>Livro</th>
+              <th>Data Empréstimo</th>
+              <th>Data Devolução</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaEmprestimosMes"></tbody>
+        </table>
+        <div style="margin-top:8px">Total no mês: <strong id="emprestimosMesCount">0</strong></div>
+      </div>
+    </section>
+
+    <!-- Gerenciar Livros -->
+    <section id="livros" class="section-pad">
+      <div class="section-title-row">
+        <h2>Gerenciar Livros</h2>
+        <div class="search-row">
+          <input id="buscaLivros" type="search" placeholder="Livros" />
+          <button class="btn primary" id="btnAbrirNovoLivro">Adicionar novo livro</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table" id="tabelaLivros">
+          <thead>
+            <tr>
+              <th>Capa</th>
+              <th>Título</th>
+              <th>Autor</th>
+              <th>Gênero</th>
+              <th>Ano</th>
+              <th>Status</th>
+              <th style="width:100px">Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Gerenciar Usuários -->
+    <section id="usuarios" class="section-pad">
+      <div class="section-title-row">
+        <h2>Gerenciar Usuários</h2>
+        <div class="search-row">
+          <input id="buscaUsuarios" type="search" placeholder="Usuários" />
+          <button class="btn primary" id="btnAbrirNovoUsuario">Adicionar novo usuário</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table" id="tabelaUsuarios">
+          <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Nome</th>
+              <th>Matrícula</th>
+              <th>Tipo</th>
+              <th>Telefone</th>
+              <th>E-mail</th>
+              <th>Senha</th>
+              <th style="width:100px">Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Empréstimos e Devoluções -->
+    <section id="emprestimos" class="section-pad">
+      <div class="section-title-row">
+        <h2>Empréstimos e Devoluções</h2>
+        <div class="search-row">
+          <input id="buscaEmprestimos" type="search" placeholder="Pesquisar empréstimos" />
+          <button class="btn primary" id="btnAbrirEmprestimo">Fazer empréstimo</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table" id="tabelaEmprestimos">
+          <thead>
+            <tr>
+              <th>Título do Livro</th>
+              <th>Usuário</th>
+              <th>Data de Empréstimo</th>
+              <th>Data de Devolução</th>
+              <th style="width:80px">Ações</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAIS -->
+  <!-- Livro -->
+  <dialog id="modalLivro" class="modal">
+    <form method="dialog" class="modal-card" id="formLivro">
+      <h3 id="livroModalTitulo">Novo Livro</h3>
+      <div class="grid">
+        <label>Título <input id="livroTitulo" type="text" required></label>
+        <label>Autor <input id="livroAutor" type="text" required></label>
+        <label>Gênero <input id="livroGenero" type="text"></label>
+        <label>Ano <input id="livroAno" type="number" min="1500" max="2100"></label>
+        <label>Capa (imagem) <input id="livroCapa" type="file" accept="image/*"></label>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn" id="cancelarLivro">Cancelar</button>
+        <button class="btn primary" id="salvarLivroBtn" value="default">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Usuário -->
+  <dialog id="modalUsuario" class="modal">
+    <form class="modal-card" id="formUsuario" novalidate>
+      <h3 id="usuarioModalTitulo">Novo Usuário</h3>
+      <div class="grid">
+        <label>Nome
+          <input id="usuarioNome" type="text" required />
+        </label>
+        <label>Matrícula
+          <input id="usuarioMatricula" type="text" pattern="\\d{5}" maxlength="5"
+                 title="A matrícula deve conter exatamente 5 dígitos numéricos" required />
+        </label>
+        <label>Tipo
+          <select id="usuarioTipo" required>
+            <option value="Aluno">Aluno</option>
+            <option value="Professor">Professor</option>
+          </select>
+        </label>
+        <label>Telefone
+          <input id="usuarioTelefone" type="tel" pattern="\\d{11}" maxlength="11"
+                 title="Digite apenas números — 11 dígitos (ex: 11987654321)" required />
+        </label>
+        <label>Email
+          <input id="usuarioEmail" type="email" placeholder="exemplo@email.com"
+                 title="Digite um endereço de e-mail válido" required />
+        </label>
+        <label>Senha
+            <input id="usuarioSenha" type="password" required minlength="4" />
+        </label>
+        <label>Foto
+          <input id="usuarioFoto" type="file" accept="image/*" />
+        </label>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn" id="fecharUsuarioModal" formnovalidate>Cancelar</button>
+        <button type="submit" class="btn primary" id="salvarUsuarioBtn">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Empréstimo -->
+  <dialog id="modalEmprestimo" class="modal">
+    <form method="dialog" class="modal-card" id="formEmprestimo">
+      <h3>Novo Empréstimo</h3>
+      <div class="grid">
+        <label>Livro
+          <select id="emprestimoLivro" required></select>
+        </label>
+        <label>Usuário
+          <select id="emprestimoUsuario" required></select>
+        </label>
+        <label>Data de Empréstimo
+          <input id="dataEmprestimo" type="date" required />
+        </label>
+        <label>Data de Devolução
+          <input id="dataDevolucao" type="date" required />
+        </label>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn" id="cancelarEmprestimo">Cancelar</button>
+        <button class="btn primary" id="salvarEmprestimoBtn" value="default">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- JS comum e por aba -->
+  <script src="core.js"></script>
+  <script src="resumo.js"></script>
+  <script src="livros.js"></script>
+  <script src="usuarios.js"></script>
+  <script src="emprestimos.js"></script>
+</body>
+</html>
